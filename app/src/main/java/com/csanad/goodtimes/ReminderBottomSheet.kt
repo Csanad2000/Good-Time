@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.csanad.goodtimes.databinding.ReminderBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,12 +31,41 @@ class ReminderBottomSheet : BottomSheetDialogFragment() {
             makeDatePickerDialog()
         }
 
+        binding!!.hourPicker.minValue=0
+        binding!!.hourPicker.maxValue=23
+        binding!!.hourPicker.wrapSelectorWheel=true
+        binding!!.hourPicker.value=6
+
+        binding!!.minutePicker.minValue=0
+        binding!!.minutePicker.maxValue=59
+        binding!!.minutePicker.wrapSelectorWheel=true
+        binding!!.minutePicker.value=30
+
+        binding!!.noChip.setOnCheckedChangeListener { button, b ->
+            when(button.isChecked){
+                false->{
+                    binding!!.daysScrollView.visibility=View.VISIBLE
+                    binding!!.daysTextView.visibility=View.VISIBLE
+                }
+                true->{
+                    binding!!.daysScrollView.visibility=View.GONE
+                    binding!!.daysTextView.visibility=View.GONE
+                }
+            }
+        }
+
         binding!!.cancelButton.setOnClickListener {
             dismiss()
         }
 
         binding!!.applyButton.setOnClickListener {
-            Toast.makeText(context,"Works",Toast.LENGTH_SHORT).show()
+            if (binding!!.descriptionEditText.text.isNullOrBlank()){
+                Toast.makeText(context,"Please add a description.",Toast.LENGTH_SHORT).show()
+            }else {
+                /*val reminder=Reminder(binding!!.repeatingChipGroup.checkedChipId,binding!!.daysChipGroup.checkedChipIds,
+                binding!!.descriptionEditText.text.toString(),binding!!.dateEditText.text.toString(),
+                (binding!!.hourPicker.value.toString()+"/"+binding!!.minutePicker.value.toString()))*/
+            }
         }
 
         return binding!!.root

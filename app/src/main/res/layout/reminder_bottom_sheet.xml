@@ -41,12 +41,14 @@
                 app:singleSelection="true">
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
                     android:id="@+id/noChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/no" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
                     android:id="@+id/yesChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -93,46 +95,53 @@
                 app:singleLine="true">
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
                     android:id="@+id/mondayChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/monday" />
+                    android:text="@string/mon" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
                     android:id="@+id/tuesdayChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tuesday" />
+                    android:text="@string/tue" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
                     android:id="@+id/wednesdayChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wednesday" />
+                    android:text="@string/wed" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
                     android:id="@+id/thursdayChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/thursday" />
+                    android:text="@string/thu" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
                     android:id="@+id/fridayChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/friday" />
+                    android:text="@string/fri" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
                     android:id="@+id/saturdayChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/saturday" />
+                    android:text="@string/sat" />
 
                 <com.google.android.material.chip.Chip
+                    style="@style/CustomChipStyle"
                     android:id="@+id/sundayChip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/sunday" />
+                    android:text="@string/sun" />
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
     </HorizontalScrollView>

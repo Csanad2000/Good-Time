@@ -6,11 +6,11 @@ data class Reminder(
     @SerializedName("repetition")
     var repetition:Int,
     @SerializedName("days")
-    var days:ArrayList<Int>?,
+    var days: MutableList<Int>,
     @SerializedName("description")
     var description:String?,
     @SerializedName("from")
-    var from:Long,
+    var from: String,
     @SerializedName("time")
-    var time:Long
+    var time: String
 )

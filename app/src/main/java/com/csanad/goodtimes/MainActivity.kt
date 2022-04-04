@@ -17,9 +17,6 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
-
-        /*navController=findNavController(R.id.fragmentContainerView)
-        val configuration= AppBarConfiguration(setOf(R.id.remindersFragment))*/
     }
 
     override fun onSupportNavigateUp(): Boolean {
