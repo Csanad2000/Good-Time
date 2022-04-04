@@ -1,6 +1,8 @@
-package com.csanad.goodtimes
+package com.csanad.goodtimes.reminders
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Reminder(
     @SerializedName("repetition")

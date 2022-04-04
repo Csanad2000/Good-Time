@@ -1,7 +1,7 @@
 package com.csanad.goodtimes.quotes.database.quote
 
 import androidx.room.TypeConverter
-import com.csanad.goodtimes.Reminder
+import com.csanad.goodtimes.reminders.Reminder
 import com.csanad.goodtimes.quotes.api.Quote
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -21,12 +21,12 @@ class QuoteTypeConverter {
     }
 
     @TypeConverter
-    fun reminderToString(reminder:Reminder):String{
+    fun reminderToString(reminder: Reminder):String{
         return gson.toJson(reminder)
     }
 
     @TypeConverter
-    fun stringToReminder(data:String):Reminder{
+    fun stringToReminder(data:String): Reminder {
         val listType=object: TypeToken<Reminder>(){}.type
         return gson.fromJson(data,listType)
     }

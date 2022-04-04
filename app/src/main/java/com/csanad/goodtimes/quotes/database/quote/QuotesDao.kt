@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.csanad.goodtimes.Constants.QUOTES_TABLE
 import com.csanad.goodtimes.Constants.REMINDERS_TABLE
-import com.csanad.goodtimes.Reminder
+import com.csanad.goodtimes.reminders.Reminder
 import com.csanad.goodtimes.quotes.api.Quote
 
 @Dao
@@ -20,5 +20,5 @@ interface QuotesDao {
     suspend fun insertReminder(remindersEntity:RemindersEntity)
 
     @Query("SELECT 1 FROM $REMINDERS_TABLE")
-    suspend fun readReminder():Reminder
+    suspend fun readReminder(): Reminder
 }
