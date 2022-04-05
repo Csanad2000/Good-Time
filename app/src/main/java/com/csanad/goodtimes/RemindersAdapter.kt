@@ -2,6 +2,7 @@ package com.csanad.goodtimes
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.csanad.goodtimes.databinding.ReminderRowBinding
 import com.csanad.goodtimes.reminders.Collection
@@ -9,11 +10,11 @@ import com.csanad.goodtimes.reminders.Reminder
 
 class RemindersAdapter:RecyclerView.Adapter<RemindersAdapter.MyViewHolder>() {
 
-    var reminder= Collection()
+    var reminders= emptyList<Reminder>()
 
     class MyViewHolder(private val binding: ReminderRowBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(collection:Collection){
-            binding.collection=collection
+        fun bind(reminder: Reminder){
+            binding.reminder=reminder
             binding.executePendingBindings()
         }
 
@@ -31,16 +32,18 @@ class RemindersAdapter:RecyclerView.Adapter<RemindersAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentReminder=reminder[position]
+        val currentReminder=reminders[position]
         holder.bind(currentReminder)
     }
 
     override fun getItemCount(): Int {
-        return reminder.size
+        return reminders.size
     }
 
     fun setData(newData:Collection){
-        reminder=newData
-        notifyDataSetChanged()
+        val remindersDiffUtil=RemindersDiffUtil(reminders,newData)
+        val diffUtilResult=DiffUtil.calculateDiff(remindersDiffUtil)
+        reminders=newData
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 }

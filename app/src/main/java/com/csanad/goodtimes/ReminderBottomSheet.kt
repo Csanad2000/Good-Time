@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.csanad.goodtimes.databinding.ReminderBottomSheetBinding
+import com.csanad.goodtimes.reminders.Reminder
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class ReminderBottomSheet : BottomSheetDialogFragment() {
     private var binding:ReminderBottomSheetBinding?=null
 
@@ -62,9 +65,9 @@ class ReminderBottomSheet : BottomSheetDialogFragment() {
             if (binding!!.descriptionEditText.text.isNullOrBlank()){
                 Toast.makeText(context,"Please add a description.",Toast.LENGTH_SHORT).show()
             }else {
-                /*val reminder=Reminder(binding!!.repeatingChipGroup.checkedChipId,binding!!.daysChipGroup.checkedChipIds,
-                binding!!.descriptionEditText.text.toString(),binding!!.dateEditText.text.toString(),
-                (binding!!.hourPicker.value.toString()+"/"+binding!!.minutePicker.value.toString()))*/
+                val reminder= Reminder(binding!!.repeatingChipGroup.checkedChipId,binding!!.daysChipGroup.checkedChipIds,
+                binding!!.descriptionEditText.text,binding!!.dateEditText.text.toString(),
+                (binding!!.hourPicker.value.toString()+"/"+binding!!.minutePicker.value.toString()))
             }
         }
 
