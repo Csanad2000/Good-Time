@@ -1,5 +1,6 @@
 package com.csanad.goodtimes.quotes.database.quote
 
+import android.text.Editable
 import androidx.room.TypeConverter
 import com.csanad.goodtimes.reminders.Reminder
 import com.csanad.goodtimes.quotes.api.Quote

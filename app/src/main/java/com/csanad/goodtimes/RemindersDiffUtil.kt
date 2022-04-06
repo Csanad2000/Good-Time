@@ -1,9 +1,10 @@
 package com.csanad.goodtimes
 
 import androidx.recyclerview.widget.DiffUtil
+import com.csanad.goodtimes.quotes.database.quote.RemindersEntity
 import com.csanad.goodtimes.reminders.Reminder
 
-class RemindersDiffUtil(val oldList: List<Reminder>, val newList:List<Reminder>):DiffUtil.Callback() {
+class RemindersDiffUtil(val oldList: List<RemindersEntity>, val newList:List<RemindersEntity>):DiffUtil.Callback() {
     override fun getOldListSize(): Int {
         return oldList.size
     }

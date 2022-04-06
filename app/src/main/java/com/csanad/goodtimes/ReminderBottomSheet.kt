@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.csanad.goodtimes.databinding.ReminderBottomSheetBinding
+import com.csanad.goodtimes.quotes.database.quote.RemindersEntity
 import com.csanad.goodtimes.reminders.Reminder
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +17,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class ReminderBottomSheet : BottomSheetDialogFragment() {
+    lateinit var mainViewModel: MainViewModel
     private var binding:ReminderBottomSheetBinding?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +30,8 @@ class ReminderBottomSheet : BottomSheetDialogFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding=ReminderBottomSheetBinding.inflate(layoutInflater,container,false)
+
+        mainViewModel= ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
         val todayDate=SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis())
         binding!!.dateEditText.setText(todayDate)
@@ -66,8 +71,11 @@ class ReminderBottomSheet : BottomSheetDialogFragment() {
                 Toast.makeText(context,"Please add a description.",Toast.LENGTH_SHORT).show()
             }else {
                 val reminder= Reminder(binding!!.repeatingChipGroup.checkedChipId,binding!!.daysChipGroup.checkedChipIds,
-                binding!!.descriptionEditText.text,binding!!.dateEditText.text.toString(),
+                binding!!.descriptionEditText.text!!.toString(),binding!!.dateEditText.text.toString(),
                 (binding!!.hourPicker.value.toString()+"/"+binding!!.minutePicker.value.toString()))
+
+                mainViewModel.insertReminders(RemindersEntity(reminder))
+                dismiss()
             }
         }
 

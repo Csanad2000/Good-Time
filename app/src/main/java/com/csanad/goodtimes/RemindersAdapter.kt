@@ -5,12 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.csanad.goodtimes.databinding.ReminderRowBinding
+import com.csanad.goodtimes.quotes.database.quote.RemindersEntity
 import com.csanad.goodtimes.reminders.Collection
 import com.csanad.goodtimes.reminders.Reminder
 
 class RemindersAdapter:RecyclerView.Adapter<RemindersAdapter.MyViewHolder>() {
 
-    var reminders= emptyList<Reminder>()
+    var reminders= emptyList<RemindersEntity>()
 
     class MyViewHolder(private val binding: ReminderRowBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(reminder: Reminder){
@@ -33,14 +34,14 @@ class RemindersAdapter:RecyclerView.Adapter<RemindersAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentReminder=reminders[position]
-        holder.bind(currentReminder)
+        holder.bind(currentReminder.reminder)
     }
 
     override fun getItemCount(): Int {
         return reminders.size
     }
 
-    fun setData(newData:Collection){
+    fun setData(newData:List<RemindersEntity>){
         val remindersDiffUtil=RemindersDiffUtil(reminders,newData)
         val diffUtilResult=DiffUtil.calculateDiff(remindersDiffUtil)
         reminders=newData

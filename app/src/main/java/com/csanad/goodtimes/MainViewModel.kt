@@ -5,16 +5,40 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.csanad.goodtimes.quotes.api.Result
+import com.csanad.goodtimes.quotes.database.quote.QuotesEntity
+import com.csanad.goodtimes.quotes.database.quote.RemindersEntity
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
-class MainViewModel @ViewModelInject constructor(private val repository: Repository,application: Application):AndroidViewModel(application) {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val repository: Repository, application: Application):AndroidViewModel(application) {
+
+    var readReminders: LiveData<List<RemindersEntity>> =repository.local.readReminder().asLiveData()
+    var readQuotes:LiveData<List<QuotesEntity>> =repository.local.readQuote().asLiveData()
+
+    fun insertReminders(remindersEntity: RemindersEntity)=viewModelScope.launch(Dispatchers.IO) {
+        repository.local.insertReminders(remindersEntity)
+    }
+
+    fun insertQuotes(quotesEntity: QuotesEntity)=viewModelScope.launch(Dispatchers.IO) {
+        repository.local.insertQuotes(quotesEntity)
+    }
+
+    fun getReminders()=viewModelScope.launch {
+        getRemindersSafeCall()
+    }
+    
+    
+
+
+
     var quotesResponse:MutableLiveData<NetworkResult<Result>> = MutableLiveData()
-
     fun getQuotes()=viewModelScope.launch {
         getQuotesSafeCall()
     }
@@ -25,6 +49,11 @@ class MainViewModel @ViewModelInject constructor(private val repository: Reposit
             try {
                 val response=repository.remote.getMulti()
                 quotesResponse.value=handleQuotesResponse(response)
+
+                val result=quotesResponse.value!!.data
+                if (result!=null){
+                    offlineCacheQuotes(result)
+                }
             }catch (e:Exception){
                 quotesResponse.value=NetworkResult.Error("Quotes not found")
             }
@@ -32,6 +61,15 @@ class MainViewModel @ViewModelInject constructor(private val repository: Reposit
         }else{
             quotesResponse.value=NetworkResult.Error("No internet connection")
         }
+    }
+
+    private fun offlineCacheQuotes(result: Result) {
+        val quotesEntity=QuotesEntity(result)
+        insertQuotes(quotesEntity)
+    }
+
+    private suspend fun getRemindersSafeCall(){
+
     }
 
     //TODO: Ez Api-tól függ

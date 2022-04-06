@@ -40,9 +40,9 @@ class RemindersBindingAdapter {
 
         @BindingAdapter("setDescription")
         @JvmStatic
-        fun setDescription(layout:TextInputLayout, description: Editable?){
+        fun setDescription(layout:TextInputLayout, description: String?){
             if (!description.isNullOrBlank()){
-                layout.editText!!.text=description
+                layout.editText!!.setText(description)
                 layout.visibility=View.VISIBLE
             }
         }

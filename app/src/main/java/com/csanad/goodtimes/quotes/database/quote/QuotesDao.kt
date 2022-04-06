@@ -16,11 +16,11 @@ interface QuotesDao {
     suspend fun insertQuotes(quotesEntity: QuotesEntity)
 
     @Query("SELECT * FROM $QUOTES_TABLE")
-    suspend fun readQuotes(): Flow<List<QuotesEntity>>
+    fun readQuotes(): Flow<List<QuotesEntity>>
 
     @Insert
     suspend fun insertReminder(remindersEntity:RemindersEntity)
 
     @Query("SELECT * FROM $REMINDERS_TABLE ORDER BY id ASC")
-    suspend fun readReminder(): Flow<List<RemindersEntity>>
+    fun readReminder(): Flow<List<RemindersEntity>>
 }
