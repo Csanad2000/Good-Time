@@ -7,7 +7,7 @@ import com.csanad.goodtimes.quotes.api.Quote
 import com.csanad.goodtimes.quotes.api.Result
 
 @Entity(tableName=QUOTES_TABLE)
-class QuotesEntity(var result:Result) {
-    @PrimaryKey(autoGenerate = false)
+class QuotesEntity(var quote: Quote) {
+    @PrimaryKey(autoGenerate = true)
     var id:Int=0
 }

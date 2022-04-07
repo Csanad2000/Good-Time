@@ -17,9 +17,5 @@
         android:id="@+id/addReminderBottomSheet"
         android:name="com.csanad.goodtimes.ReminderBottomSheet"
         android:label="add_reminder_bottom_sheet"
-        tools:layout="@layout/reminder_bottom_sheet" >
-        <action
-            android:id="@+id/action_addReminderBottomSheet_to_remindersFragment"
-            app:destination="@id/remindersFragment" />
-    </dialog>
+        tools:layout="@layout/reminder_bottom_sheet" />
 </navigation>

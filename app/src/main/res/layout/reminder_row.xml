@@ -11,7 +11,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -67,13 +68,15 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     setDate="@{reminder.from}"
-                    tools:text="a date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
                     app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textView6"
-                    app:layout_constraintTop_toTopOf="@+id/textView6" />
+                    app:layout_constraintTop_toTopOf="@+id/textView6"
+                    tools:text="a date" />
 
                 <TextView
                     android:id="@+id/textView7"
@@ -102,9 +105,11 @@
                         android:layout_height="wrap_content"
                         android:clickable="false"
                         android:focusable="false"
+                        android:inputType="textNoSuggestions"
                         android:hint=""
                         android:maxLines="3"
-                        android:ellipsize="end"/>
+                        android:ellipsize="end"
+                        android:cursorVisible="false"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 

@@ -13,7 +13,7 @@ data class Reminder(
     @SerializedName("description")
     var description: String,
     @SerializedName("from")
-    var from: String,
+    var from: Long,
     @SerializedName("time")
-    var time: String
+    var time: Long
 )

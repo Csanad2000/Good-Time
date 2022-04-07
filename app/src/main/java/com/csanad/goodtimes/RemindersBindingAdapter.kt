@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.csanad.goodtimes.reminders.Reminder
 import com.google.android.material.textfield.TextInputLayout
+import java.text.SimpleDateFormat
 
 class RemindersBindingAdapter {
     companion object{
@@ -34,8 +35,8 @@ class RemindersBindingAdapter {
 
         @BindingAdapter("setDate")
         @JvmStatic
-        fun setDate(textView: TextView,date:String){
-            textView.text=date
+        fun setDate(textView: TextView,date:Long){
+            textView.text=SimpleDateFormat("dd/MM/yyyy").format(date)
         }
 
         @BindingAdapter("setDescription")
@@ -49,14 +50,14 @@ class RemindersBindingAdapter {
 
         @BindingAdapter("setHour")
         @JvmStatic
-        fun setHour(textView:TextView,time:String){
-            textView.text=time.replaceAfter('/',"").dropLast(1)
+        fun setHour(textView:TextView,time:Long){
+            textView.text=SimpleDateFormat("hh").format(time)
         }
 
         @BindingAdapter("setMinute")
         @JvmStatic
-        fun setMinute(textView:TextView,time:String){
-            textView.text=time.replaceBefore('/',"").drop(1)
+        fun setMinute(textView:TextView,time:Long){
+            textView.text=SimpleDateFormat("mm").format(time)
         }
     }
 }

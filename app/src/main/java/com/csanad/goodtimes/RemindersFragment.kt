@@ -61,7 +61,8 @@ class RemindersFragment : Fragment() {
         mainViewModel.quotesResponse.observe(viewLifecycleOwner,{
             when(it){
                 is NetworkResult.Success->{
-                    mainViewModel.insertQuotes(QuotesEntity(it.data!!))
+                    for (i in it.data!!.indices)
+                    mainViewModel.insertQuotes(QuotesEntity(it.data!![i]))
                 }
                 is NetworkResult.Error->{
                     Toast.makeText(requireContext(),it.message.toString(),Toast.LENGTH_SHORT).show()
@@ -78,6 +79,8 @@ class RemindersFragment : Fragment() {
         lifecycleScope.launch {
             mainViewModel.readQuotes.observe(viewLifecycleOwner,{
                 if (it.isNotEmpty()){
+
+                }else{
 
                 }
             })

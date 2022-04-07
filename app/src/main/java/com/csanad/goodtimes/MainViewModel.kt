@@ -1,15 +1,16 @@
 package com.csanad.goodtimes
 
+import android.app.AlarmManager
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import androidx.hilt.lifecycle.ViewModelInject
+import androidx.core.app.AlarmManagerCompat
 import androidx.lifecycle.*
 import com.csanad.goodtimes.quotes.api.Result
 import com.csanad.goodtimes.quotes.database.quote.QuotesEntity
 import com.csanad.goodtimes.quotes.database.quote.RemindersEntity
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,19 +25,12 @@ class MainViewModel @Inject constructor(private val repository: Repository, appl
 
     fun insertReminders(remindersEntity: RemindersEntity)=viewModelScope.launch(Dispatchers.IO) {
         repository.local.insertReminders(remindersEntity)
+        //AlarmManagerCompat.setAlarmClock()
     }
 
     fun insertQuotes(quotesEntity: QuotesEntity)=viewModelScope.launch(Dispatchers.IO) {
         repository.local.insertQuotes(quotesEntity)
     }
-
-    fun getReminders()=viewModelScope.launch {
-        getRemindersSafeCall()
-    }
-    
-    
-
-
 
     var quotesResponse:MutableLiveData<NetworkResult<Result>> = MutableLiveData()
     fun getQuotes()=viewModelScope.launch {
@@ -64,12 +58,30 @@ class MainViewModel @Inject constructor(private val repository: Repository, appl
     }
 
     private fun offlineCacheQuotes(result: Result) {
-        val quotesEntity=QuotesEntity(result)
-        insertQuotes(quotesEntity)
+        for (i in result.indices){
+            val quotesEntity=QuotesEntity(result[i])
+            insertQuotes(quotesEntity)
+        }
     }
 
-    private suspend fun getRemindersSafeCall(){
+    suspend fun singleQuoteSafeCall(){
+        quotesResponse.value=NetworkResult.Loading()
+        if (hasInternetConnection()){
+            try {
+                val response=repository.remote.getQuote()
+                quotesResponse.value=handleQuotesResponse(response)
 
+                val result=quotesResponse.value!!.data
+                if (result!=null){
+
+                }
+            }catch (e:Exception){
+                quotesResponse.value=NetworkResult.Error("Quotes not found")
+            }
+
+        }else{
+            quotesResponse.value=NetworkResult.Error("No internet connection")
+        }
     }
 
     //TODO: Ez Api-tól függ
