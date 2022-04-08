@@ -7,6 +7,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.core.app.AlarmManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
+
 import androidx.lifecycle.*
 import com.csanad.goodtimes.quotes.api.Result
 import com.csanad.goodtimes.quotes.database.quote.QuotesEntity
@@ -25,7 +27,7 @@ class MainViewModel @Inject constructor(private val repository: Repository, appl
 
     fun insertReminders(remindersEntity: RemindersEntity)=viewModelScope.launch(Dispatchers.IO) {
         repository.local.insertReminders(remindersEntity)
-        //AlarmManagerCompat.setAlarmClock()
+        //AlarmManagerCompat.setExactAndAllowWhileIdle()
     }
 
     fun insertQuotes(quotesEntity: QuotesEntity)=viewModelScope.launch(Dispatchers.IO) {
