@@ -15,6 +15,5 @@ class StartupReceiver : BroadcastReceiver() {
         }else {
             context.startService(startService)
         }
-        Log.i("GoodTimes","service started")
     }
 }

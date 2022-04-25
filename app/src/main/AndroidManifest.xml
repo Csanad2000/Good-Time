@@ -35,9 +35,11 @@
             android:enabled="true"
             android:exported="true" />
 
+        <!-- might need intent filter -->
+
         <activity
             android:name=".ReminderActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

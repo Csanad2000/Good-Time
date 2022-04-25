@@ -14,6 +14,7 @@ class RemindersService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         //receiver.setReminder(this,????)
+        Log.i("GoodTimes","service started")
         val activityIntent=Intent(baseContext,ReminderActivity::class.java)
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(activityIntent)
@@ -22,6 +23,7 @@ class RemindersService : Service() {
 
     override fun onStart(intent: Intent?, startId: Int) {
         //receiver.setReminder(this,????)
+        Log.i("GoodTimes","service started")
         val activityIntent=Intent(baseContext,ReminderActivity::class.java)
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(activityIntent)

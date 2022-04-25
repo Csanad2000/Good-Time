@@ -20,13 +20,13 @@ class RemindersBindingAdapter {
                         text+=", "
                     }
                     when(day){
-                        0 -> text += R.string.mon
-                        1 -> text+=R.string.tue
-                        2->text+=R.string.wed
-                        3->text+=R.string.thu
-                        4->text+=R.string.fri
-                        5->text+=R.string.sat
-                        6->text+=R.string.sun
+                        1 -> text += "Mon"
+                        2 -> text+="Tue"
+                        3->text+="Wed"
+                        4->text+="Thu"
+                        5->text+="Fri"
+                        6->text+="Sat"
+                        7->text+="Sun"
                     }
                 }
             }

@@ -9,7 +9,7 @@ data class Reminder(
     @SerializedName("repetition")
     var repetition:Int,
     @SerializedName("days")
-    var days: MutableList<Int>,
+    var days: ArrayList<Int>,
     @SerializedName("description")
     var description: String,
     @SerializedName("from")
