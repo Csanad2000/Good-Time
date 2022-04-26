@@ -75,7 +75,7 @@ class ReminderBottomSheet : BottomSheetDialogFragment() {
                     SimpleDateFormat("hh").parse(binding!!.hourPicker.value.toString()).time +
                             SimpleDateFormat("mm").parse(binding!!.minutePicker.value.toString()).time
 
-                val date =
+                var date =
                     SimpleDateFormat("dd/MM/yyyy").parse(binding!!.dateEditText.text.toString()).time
 
                 val days=ArrayList<Int>()
@@ -93,6 +93,8 @@ class ReminderBottomSheet : BottomSheetDialogFragment() {
                     }
                 }
 
+                date=getCorrectDate(date, days,time)
+
                 var same = false
 
                 for (entity in mainViewModel.readReminders.value!!) {
@@ -103,8 +105,10 @@ class ReminderBottomSheet : BottomSheetDialogFragment() {
                             break
                         }
                     }
-                    if(days.isEmpty()){
-                        canConflict=true
+                    if(days.isEmpty()||entity.reminder.days.isEmpty()){
+                        if (date==entity.reminder.from) {
+                            canConflict = true
+                        }
                     }
                     if (canConflict) {
                         var tempFrom = entity.reminder.from
@@ -112,16 +116,10 @@ class ReminderBottomSheet : BottomSheetDialogFragment() {
                         if (tempFrom <= date) {
                             while (tempFrom < date) {
                                 tempFrom = getNextDate(tempFrom, days, entity)
-                                if (tempFrom == entity.reminder.from) {
-                                    break
-                                }
                             }
                         } else {
                             while (tempDate < entity.reminder.from) {
                                 tempDate = getNextDate(tempDate, days)
-                                if (tempDate == date) {
-                                    break
-                                }
                             }
                         }
                         if (tempFrom == tempDate && entity.reminder.time == time) {
@@ -205,12 +203,30 @@ class ReminderBottomSheet : BottomSheetDialogFragment() {
             }
 
             if(newDayOfWeek<=oldDayOfWeek){
-                c.add(Calendar.DATE,7-(oldDayOfWeek-newDayOfWeek))
+                c.roll(Calendar.DAY_OF_MONTH,7-(oldDayOfWeek-newDayOfWeek))
             }else{
-                c.add(Calendar.DATE,(newDayOfWeek-oldDayOfWeek))
+                c.roll(Calendar.DAY_OF_MONTH,(newDayOfWeek-oldDayOfWeek))
             }
             return c.time.time
         }
+    }
+
+    fun getCorrectDate(date: Long,days: ArrayList<Int>,time:Long):Long{
+        val oldDate=Date(date)
+        val c=Calendar.getInstance()
+        c.time=oldDate
+
+            if(time <SimpleDateFormat("hh/mm").parse(SimpleDateFormat("hh/mm").format(System.currentTimeMillis())).time&&date <=SimpleDateFormat("dd/MM/yyyy").parse(SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis())).time) {
+                while (date <=SimpleDateFormat("dd/MM/yyyy").parse(SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis())).time) {
+                    c.roll(Calendar.DAY_OF_MONTH, 1)
+                }
+            }
+        val oldDayOfWeek=c.get(Calendar.DAY_OF_WEEK)
+            if (days.contains(oldDayOfWeek)) {
+                return date
+            } else {
+                return getNextDate(date, days)
+            }
     }
 
     fun makeDatePickerDialog() {
